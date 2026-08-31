@@ -21,15 +21,12 @@
     <!-- Kept at major.0.0.0 so consumers are not forced to rebind on every release.
          FileVersion/Version carry the real release number. -->
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <FileVersion>1.5.0</FileVersion>
-    <Version>1.5.0</Version>
+    <FileVersion>1.5.1</FileVersion>
+    <Version>1.5.1</Version>
     <PackageReleaseNotes>
-v1.5.0:
-- Added new HTML tags: span, blockquote, pre, code, hr, mark, abbr, kbd, samp, var, q
-- Added CSS inline style parsing support for text and container properties
-- Supported CSS properties: color, background-color, font-size, font-weight, font-style, font-family, text-decoration, padding, margin, border, width, height, text-align
-- Supported color formats: hex, rgb(), rgba(), named colors
-- Supported length units: px, pt, em, rem, cm, mm, in, %
+v1.5.1:
+- Fixed whitespace being dropped before inline formatting tags inside paragraphs
+- Fixed inline &lt;a&gt; tags inside paragraphs rendering as plain text instead of clickable hyperlinks
 
 For full changelog see: https://github.com/JeremyVm/QuestPDF.HTML/blob/master/CHANGELOG.md
     </PackageReleaseNotes>
