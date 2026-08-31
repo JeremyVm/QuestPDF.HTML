@@ -18,7 +18,9 @@
     <RepositoryUrl>https://github.com/JeremyVm/HTMLToQPDF</RepositoryUrl>
     <PackageTags>pdf, file, export, generate, generation, tool, create, creation, render, document, format, quest, html, library, converter, open, source, free, standard, core</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <AssemblyVersion>1.5.0</AssemblyVersion>
+    <!-- Kept at major.0.0.0 so consumers are not forced to rebind on every release.
+         FileVersion/Version carry the real release number. -->
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>1.5.0</FileVersion>
     <Version>1.5.0</Version>
     <PackageReleaseNotes>
@@ -34,15 +36,27 @@ For full changelog see: https://github.com/JeremyVm/HTMLToQPDF/blob/master/CHANG
   </PropertyGroup>
 
   <ItemGroup>
+    <InternalsVisibleTo Include="HTMLToQPDF.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="..\README.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
   </ItemGroup>
 
+  <!-- Declared floor for QuestPDF. NuGet treats this as a minimum, so consumers
+       are free to use any newer release without waiting for a QuestPDF.HTML update.
+       Only raise it when the library actually requires a newer API.
+       CI overrides it to verify compatibility: -p:QuestPDFVersion=2026.8.0 -->
+  <PropertyGroup>
+    <QuestPDFVersion Condition="'$(QuestPDFVersion)' == ''">2025.12.3</QuestPDFVersion>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="HtmlAgilityPack" Version="1.12.4" />
-    <PackageReference Include="QuestPDF" Version="2025.12.3" />
+    <PackageReference Include="QuestPDF" Version="$(QuestPDFVersion)" />
   </ItemGroup>
 
   <ItemGroup>

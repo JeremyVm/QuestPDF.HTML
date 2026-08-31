@@ -1,0 +1,61 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+  # Weekly run so a breaking QuestPDF release surfaces here, not in a bug report.
+  schedule:
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: QuestPDF ${{ matrix.questpdf }}
+    runs-on: ubuntu-latest
+    continue-on-error: ${{ matrix.experimental || false }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # The floor declared in HTMLToQPDF.csproj. Must always pass.
+          - questpdf: '2025.12.3'
+          # Newest release verified against this library.
+          - questpdf: '2026.8.0'
+          # Floating latest: early warning only, never gates a merge.
+          - questpdf: '*'
+            experimental: true
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+            9.0.x
+
+      # QuestPDF renders through SkiaSharp, which needs fontconfig and at least
+      # one installed font family to lay out text on a headless runner.
+      - name: Install font dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libfontconfig1 fonts-liberation
+
+      # Library and tests only - HTMLToQPDF.Example is WPF and needs Windows.
+      - name: Build (net8.0 + net9.0)
+        run: >-
+          dotnet build HTMLToQPDF/HTMLToQPDF.csproj
+          -c Release
+          -p:QuestPDFVersion=${{ matrix.questpdf }}
+
+      - name: Test (net8.0 + net9.0)
+        run: >-
+          dotnet test HTMLToQPDF.Tests/HTMLToQPDF.Tests.csproj
+          -c Release
+          -p:QuestPDFVersion=${{ matrix.questpdf }}
+          --logger "console;verbosity=normal"
+
+      - name: Show resolved QuestPDF version
+        if: always()
+        run: grep -o '"QuestPDF/[^"]*"' HTMLToQPDF/obj/project.assets.json | sort -u
