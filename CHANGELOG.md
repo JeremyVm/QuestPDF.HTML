@@ -81,4 +81,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Earlier Versions
 
-For changes prior to version 1.3.0, please refer to the [commit history](https://github.com/JeremyVm/HTMLToQPDF/commits/master).
+For changes prior to version 1.3.0, please refer to the [commit history](https://github.com/JeremyVm/QuestPDF.HTML/commits/master).
