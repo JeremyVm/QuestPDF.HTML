@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.1] - 2026-08-31
+
+### Fixed
+
+- Whitespace before inline formatting tags was dropped, so `text <b>bold</b>` rendered as
+  `textbold`. `ParagraphComponent` trimmed the first node twice instead of the first and
+  the last one ([#2](https://github.com/JeremyVm/QuestPDF.HTML/pull/2))
+- Inline `<a>` tags inside paragraphs rendered as plain text instead of clickable
+  hyperlinks; only block-level `<a>` elements were linked
+  ([#3](https://github.com/JeremyVm/QuestPDF.HTML/pull/3))
+- `TryGetLink` inspected and advanced the original node instead of the one it was
+  walking, so it never reached an ancestor `<a>` and looped forever on any node with a
+  parent - which hung rendering as soon as paragraphs started resolving links
+
 ## [1.5.0] - 2025-02-06
 
 ### Added
