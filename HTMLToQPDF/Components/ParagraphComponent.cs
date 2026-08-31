@@ -73,7 +73,9 @@ namespace HTMLQuestPDF.Components
             {
                 if (node.NodeType == HtmlNodeType.Text)
                 {
-                    var span = text.Span(node.InnerText);
+                    var span = node.TryGetLink(out string link) && !string.IsNullOrEmpty(link)
+                        ? text.Hyperlink(node.InnerText, link)
+                        : text.Span(node.InnerText);
                     GetTextSpanAction(node).Invoke(span);
                 }
                 else if (node.IsBr())
