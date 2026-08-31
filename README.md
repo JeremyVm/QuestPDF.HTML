@@ -148,7 +148,7 @@ The library supports parsing inline `style` attributes on HTML elements.
 
 ## Example Application
 
-You can use [HTMLToQPDF.Example](https://github.com/JeremyVm/HTMLToQPDF) to try out the capabilities of this extension.
+You can use [HTMLToQPDF.Example](https://github.com/JeremyVm/QuestPDF.HTML) to try out the capabilities of this extension.
 
 <p align="center">
   <img src="https://user-images.githubusercontent.com/26045342/195960914-1aef2f7e-f5bb-4c4b-bbe9-cd4770a0527f.png" />
