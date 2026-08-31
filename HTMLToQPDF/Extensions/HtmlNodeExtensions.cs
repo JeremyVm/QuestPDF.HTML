@@ -147,12 +147,12 @@ namespace HTMLQuestPDF.Extensions
             var current = node;
             while (current != null)
             {
-                if (node.IsLink())
+                if (current.IsLink())
                 {
-                    url = node.GetAttributeValue("href", "");
+                    url = current.GetAttributeValue("href", "");
                     return true;
                 }
-                current = node.ParentNode;
+                current = current.ParentNode;
             }
 
             url = "";
